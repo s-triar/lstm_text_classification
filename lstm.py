@@ -16,7 +16,6 @@ def wordEmbedding(vocab_size, max_len_pad, data, kolom):
 def defineModel(vocab_size, embed_size, dropout_ratio, n_hidden_units, shape, n_kelas, n_lstm_layer ):
     model = Sequential()
     model.add(Embedding(vocab_size, embed_size, input_length=shape[1]))
-    model.add(SpatialDropout1D(0.2))
     model.add(LSTM(units=n_hidden_units, return_sequences=True))
     for i in range(n_lstm_layer-2):
         if(i % 2 == 0):
@@ -25,8 +24,8 @@ def defineModel(vocab_size, embed_size, dropout_ratio, n_hidden_units, shape, n_
         else:
             model.add(LSTM(units=n_hidden_units, return_sequences=True))
     model.add(LSTM(units=n_hidden_units))
-    model.add(Dense(1024, activation='relu'))
-    model.add(Dense(n_kelas))
+    model.add(Dense(n_hidden_units+1024, activation='relu'))
+    model.add(Dense(n_kelas, activation='softmax'))
     model.compile(loss='categorical_crossentropy', optimizer='adam', metrics=['accuracy'])
     return model
 

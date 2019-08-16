@@ -28,7 +28,7 @@ if __name__ == "__main__":
     max_len_pad = 10
     embed_size = 128
     n_hidden_units = 1024
-    n_lstm_layers = 8
+    n_lstm_layers = 5
     dropout_ratio = 0.2
 
     n_epoch = 200
