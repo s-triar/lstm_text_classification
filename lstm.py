@@ -1,6 +1,6 @@
 from keras.preprocessing.sequence import pad_sequences
 from keras.models import Sequential, load_model
-from keras.layers import Embedding, SpatialDropout1D, LSTM, Dense, Flatten
+from keras.layers import Embedding, SpatialDropout1D, LSTM, Dense, Flatten, Dropout
 from keras.callbacks import EarlyStopping, TensorBoard, ModelCheckpoint
 import keras
 from keras.preprocessing.text import Tokenizer
@@ -25,6 +25,7 @@ def defineModel(vocab_size, embed_size, dropout_ratio, n_hidden_units, shape, n_
             model.add(LSTM(units=n_hidden_units, return_sequences=True))
     model.add(LSTM(units=n_hidden_units))
     model.add(Dense(n_hidden_units+1024, activation='relu'))
+    model.add(Dropout(dropout_ratio))
     model.add(Dense(n_kelas, activation='softmax'))
     model.compile(loss='categorical_crossentropy', optimizer='adam', metrics=['accuracy'])
     return model
